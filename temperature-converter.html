@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Temperature Converter</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to left, #FF5F6D, #FFC371);
+      color: #56273B;
+      position: relative;
+      padding: 0 1.25em;
+      font-size: 16px;
+      font-family: 'Libre Baskerville', serif;
+    }
+    
+    body.night {
+      background-image: linear-gradient(to left, #060D31, #1F4256);
+    }
+    
+    h1 {
+      font-size: 3.157em;
+      text-align: center;
+    }
+    
+    h2 {
+      font-size: 2.369em;
+      margin-top: 0;
+      text-align: left;
+    }
+    
+    p {
+      margin-top: 0;
+      font-size: 1.333em;
+      margin: 1.35em auto;
+      width: 34em;
+      text-align: left;
+    }
+    
+    header {
+      text-align: center;
+      background-color: rgba(255, 255, 255, .7);
+      padding: .07em 0;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+      margin-top: 1em;
+    }
+    
+    section {
+      background-color: rgba(255, 255, 255, .7);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+      padding: 3em 10em;
+      position: relative;
+      text-align: center;
+      margin: 2.25em auto;
+    }
+    
+    .celsius,
+    .fahrenheit {
+      transform: scale(.5);
+      transition: all 1s ease-out;
+      cursor: pointer;
+      margin-bottom: .75em;
+      font-size: 3.157em;
+      display: inline-block;
+      line-height: 1.4;
+    }
+    
+    .celsius.active,
+    .fahrenheit.active {
+      color: #FF5F6D;
+      margin-right: 1em;
+      border-left: 3px solid transparent;
+      border-image: linear-gradient(to bottom, #3acfd5 0%, #1F4256 100%) 3;
+      padding-left: .25em;
+      transform: scale(1);
+    }
+    
+    .celsius span,
+    .fahrenheit span {
+      visibility: hidden;
+    }
+    
+    .celsius.active span,
+    .fahrenheit.active span {
+      visibility: visible;
+    }
+    
+    .temp__container {
+      height: 4em;
+    }
+    
+    .temp__container,
+    form {
+      display: inline-block;
+      width: 30%;
+      text-align: center;
+    }
+    
+    form {
+      position: relative;
+      bottom: .45em;
+    }
+    
+    label {
+      font-size: 1.77em;
+    }
+    
+    input {
+      margin-left: .25em;
+      height: 1em;
+      font-size: 1em;
+      padding: 0.25em .5em;
+      border: 4px solid #47cf73;
+      border-radius: 5px;
+      width: 3em;
+      font-family: sans-serif;
+    }
+    
+    button {
+      display: block;
+      margin: 0 auto;
+      width: auto;
+      font-size: 1.33em;
+      margin-top: .5em;
+      padding: .35em .75em;
+      border: none;
+      background: #00e400;
+      border-radius: 7px;
+      color: white;
+    }
+    /*Media Queries*/
+    
+    @media (max-width: 1492px) {
+      .fahrenheit,
+      .celsius {
+        display: block;
+      }
+      form {
+        bottom: 3.65em;
+      }
+      input {
+        margin-top: .5em;
+        margin-left: 0;
+        width: 3.5em;
+      }
+      .message {
+        text-align: center;
+        width: 60%;
+      }
+    }
+    
+    @media (max-width: 1125px) {
+      .fahrenheit,
+      .celsius {
+        font-size: 2.369em;
+        width: 3em;
+      }
+      label {
+        font-size: 1.33em;
+      }
+      form {
+        bottom: 2.25em;
+      }
+    }
+    
+    @media (max-width: 925px) {
+      .fahrenheit,
+      .celsius,
+      .fahrenheit.active,
+      .celsius.active {
+        width: 4em;
+        margin: 0 auto .75em;
+      }
+      .temp__container,
+      form {
+        display: block;
+        width: 100%;
+      }
+      .temp__container {
+        margin-bottom: 5.5em;
+      }
+      form {
+        bottom: 0;
+      }
+      .message {
+        width: 100%;
+      }
+    }
+    
+    @media (max-width: 720px) {
+      section {
+        padding: 3em 1em;
+      }
+    }
+    
+    @media (max-width: 420px) {
+      h1 {
+        font-size: 2.369em
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Temperature Converter</h1>
+  </header>
+  <section>
+    <div class="temp__container">
+      <span class='fahrenheit active'>&#8457 <span></span></span>
+      <span class='celsius'>&#8451 <span></span></span>
+    </div>
+    <form>
+      <label>
+          Temperature:
+          <input type="number"/>
+        </label>
+    </form>
+    <p class='message'></p>
+    </div>
+
+  </section>
+  <script>
+    // temperature.js implemented in the Module pattern
+    const temperature = (function(window){
+      
+      const Temperature = {
+        toFahrenheit: function(celsius){
+          const tempInFahrenheit = Math.round((celsius* (9/5))+32)
+          return tempInFahrenheit
+        },
+      toCelsius: function(fahrenheit){
+        const tempInCelsius = Math.round((fahrenheit-32)*(5/9))
+        return tempInCelsius
+      }
+    }
+      return Temperature
+    }(window))
+
+    //initial values
+    let fahrenValue, celsiusValue
+    const tempToday = fahrenValue = 82
+    const tempInCelsius = celsiusValue = temperature.toCelsius(tempToday)
+
+    function message(celsius, fahrenheit){
+    return `Today’s temperature is °F ${temperature.toFahrenheit(celsius)}, which is °C ${temperature.toCelsius(fahrenheit)}.`
+    } 
+
+    //DOM hooks
+    const body = document.querySelector('body')
+    const fahrenheitContainer = document.querySelector('.fahrenheit')
+    const celsiusContainer = document.querySelector('.celsius')
+    const messageContainer = document.querySelector('.message')
+    const tempInput = document.querySelector('input')
+    const celsius = celsiusContainer.firstElementChild 
+    const fahrenheit = fahrenheitContainer.firstElementChild
+
+    //DOM injection
+    messageContainer.innerHTML = message(tempInCelsius, tempToday)
+    celsius.innerHTML = temperature.toCelsius(tempToday)
+    fahrenheit.innerHTML = temperature.toFahrenheit(tempInCelsius)
+
+    //Event Listeners
+    fahrenheitContainer.addEventListener('click', function(ev){
+      ev.currentTarget.classList.toggle('active')
+      celsiusContainer.classList.toggle('active')
+    },false)
+
+    celsiusContainer.addEventListener('click', function(ev){
+      ev.currentTarget.classList.toggle('active')
+      fahrenheitContainer.classList.toggle('active')
+    },false)
+
+    tempInput.addEventListener('input', function(ev){
+      fahrenheitContainer.classList.contains("active")
+        ? (celsiusValue = celsius.innerHTML = temperature.toCelsius(tempInput.value),
+          fahrenValue = fahrenheit.innerHTML = tempInput.value)
+        : (celsiusValue = celsius.innerHTML = tempInput.value, fahrenValue = fahrenheit.innerHTML =
+          temperature.toFahrenheit(tempInput.value))
+      console.log(fahrenValue)
+      console.log(message(celsiusValue, fahrenValue))
+      console.log(tempInput.value)
+      messageContainer.innerHTML = message(celsiusValue, fahrenValue)
+
+      tempInput.value === ''
+        ? (tempInput.style.borderColor = "#47cf73", messageContainer.innerHTML = message(tempInCelsius, tempToday))
+        : (tempInput.style.borderColor = "#38c6cd")
+    }, false)
+
+      const currentTime = new Date();
+      (currentTime.getHours() > 19 || currentTime.getHours() < 5)
+      ? body.classList.add('night') 
+      : body.classList.contains('night')
+        ? body.classList.remove('night')
+        : ""
+    </script>
+</body>
+
+</html>
